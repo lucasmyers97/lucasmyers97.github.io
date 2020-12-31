@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>physics-education | Lucas Myers</title>
+    <link>https://lucasmyers97.github.io/category/physics-education/</link>
+      <atom:link href="https://lucasmyers97.github.io/category/physics-education/index.xml" rel="self" type="application/rss+xml" />
+    <description>physics-education</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://lucasmyers97.github.io/images/icon_hua8050893e9a0407604c902e1bca9557e_88576_512x512_fill_lanczos_center_2.png</url>
+      <title>physics-education</title>
+      <link>https://lucasmyers97.github.io/category/physics-education/</link>
+    </image>
+    
+    <item>
+      <title>A Little Widget for Fourier Series</title>
+      <link>https://lucasmyers97.github.io/post/fourier-series-widget/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://lucasmyers97.github.io/post/fourier-series-widget/</guid>
+      <description>&lt;h2 id=&#34;why-the-widget&#34;&gt;Why the widget?&lt;/h2&gt;
+&lt;p&gt;While there are already a huge number of resources available which introduce the
+Fourier series (including a &lt;a href=&#34;https://youtu.be/r6sGWTCMz2k&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;truly elegant video&lt;/a&gt;
+by 3Blue1Brown on Youtube), I hadn&amp;rsquo;t really seen any resources which allow one
+to &lt;em&gt;interact&lt;/em&gt; with it in the way that I wanted. 
+To try to address this, a friend of mine and I collaborated to make the 
+applet below. 
+In it, the user can input whatever (reasonable) function they want using the 
+&lt;a href=&#34;https://mathjs.org/docs/expressions/syntax.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;math.js syntax&lt;/a&gt;
+and it will be plotted in blue.
+Then they can adjust the Fourier coefficients with the sliders, plotting the
+resulting partial sum in orange.
+I&amp;rsquo;m hoping that, in addition to serving as a fun little exercise for folks who
+are already familiar with the Fourier series, it might also serve as a motivator
+for those who are just being introduced to it (if only to answer the question
+&amp;ldquo;what is going on with this program?&amp;quot;).&lt;/p&gt;
+&lt;p&gt;So, give it a go and see if you can make the orange plot look like the blue one.
+There&amp;rsquo;s some information further down which attempts to explain a little bit 
+more about the Fourier series, and which talks about how to choose the
+coefficients so that the curves match up.&lt;/p&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en&#34;&gt;
+&lt;head&gt;
+  &lt;meta charset=&#34;utf-8&#34;&gt;
+  &lt;title&gt;Fourier Builder&lt;/title&gt;
+  &lt;script&gt;
+    window.PlotlyConfig = {MathJaxConfig: &#39;local&#39;}
+  &lt;/script&gt;
+  &lt;script src=&#34;../../../scripts/plotly-latest.min.js&#34;&gt;&lt;/script&gt;
+  &lt;script src=&#34;../../../scripts/math.js&#34;&gt;&lt;/script&gt;
+  &lt;style&gt;
+    * {
+	box-sizing: border-box;
+    }
+
+     
+    .column {
+	float: left;
+	width: 50%;
+	padding: 15px;
+    }
+
+     
+    .row::after {
+	content: &#34;&#34;;
+	clear: both;
+	display: table;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body style=&#34;width=100%&#34;&gt;
+
+  
+  &lt;label for=&#34;eq&#34;&gt;Enter an equation:&lt;/label&gt;
+  &lt;input type=&#34;text&#34; id=&#34;eq&#34; value=&#34;4 * sin(x) + 5 * cos(x/2)&#34; /&gt;
+  &lt;input type=&#34;button&#34; value=&#34;Draw&#34; id=&#34;draw&#34;/&gt;
+
+  
+  &lt;div id=&#39;norm&#39;&gt;
+  &lt;/div&gt;
+
+  
+  &lt;div id=&#34;plot&#34;&gt;&lt;/div&gt;
+
+  
+  &lt;div class=&#34;row&#34;&gt;
+    &lt;div class=&#34;column&#34;&gt;
+      &lt;table id=&#34;a_coeffs&#34;&gt;
+	&lt;th&gt;
+	  &lt;button id=&#34;a_k_button&#34;&gt;+&lt;/button&gt;
+	&lt;/th&gt;
+	&lt;th&gt;&lt;/th&gt;
+	&lt;th&gt;a&lt;sub&gt;k&lt;/sub&gt;&lt;/th&gt;
+	&lt;th&gt;&lt;/th&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div class=&#34;column&#34;&gt;
+      &lt;table id=&#34;b_coeffs&#34;&gt;
+	&lt;th&gt;
+	  &lt;button id=&#34;b_k_button&#34;&gt;+&lt;/button&gt;
+	&lt;/th&gt;
+	&lt;th&gt;&lt;/th&gt;
+	&lt;th&gt;b&lt;sub&gt;k&lt;/sub&gt;&lt;/th&gt;
+	&lt;th&gt;&lt;/th&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+
+&lt;script&gt;
+  
+  const N_COLS = 4;
+  const SLIDER_POS = 2;
+  const MIN_LABEL_POS = 1;
+  const MAX_LABEL_POS = 3;
+  const LABEL_POS = 0;
+
+  
+  const PLOT_STEP_SIZE = 0.05;
+  const PLOT_LEFT_ENDPOINT = -math.pi;
+  const PLOT_RIGHT_ENDPOINT = math.pi;
+  const PERIOD = 2 * math.pi;
+
+  
+  const DEFAULT_MIN_COEFF = -10;
+  const DEFAULT_MAX_COEFF = 10;
+  const NUM_SLIDER_STEPS = 400;
+  const NUM_DECIMALS = 4;
+
+  const reducer = (accumulator, currentValue) =&gt; accumulator + currentValue;
+
+  function addSlider(slider_cell) {
+      
+
+      
+      let slider = document.createElement(&#34;input&#34;);
+      slider.type = &#34;range&#34;;
+      slider.min = DEFAULT_MIN_COEFF;
+      slider.max = DEFAULT_MAX_COEFF;
+      slider.step = (DEFAULT_MAX_COEFF - DEFAULT_MIN_COEFF) / NUM_SLIDER_STEPS;
+      slider.value = 0;
+      slider.addEventListener(&#34;input&#34;, function(event) {draw();});
+      slider_cell.appendChild(slider);
+  }
+
+  function addCoeffLabel(label_cell) {
+      
+
+      
+      let label = document.createElement(&#34;div&#34;);
+      label_cell.appendChild(label);
+  }
+
+  function addLimLabel(label_cell, is_min) {
+      
+
+      
+      let label = document.createElement(&#34;input&#34;);
+      label.type = &#34;text&#34;;
+
+      
+      let alignment = is_min ? &#34;text-align: right;&#34; : &#34;text-align: left;&#34;;
+      label.style = &#34;width: 30px; border: none;&#34; + alignment;
+      label.value = is_min ? DEFAULT_MIN_COEFF : DEFAULT_MAX_COEFF;
+
+      
+      label.addEventListener(&#34;keydown&#34;, function(event) {
+	  if (event.keyCode == 13) {
+	      updateLim(label_cell, is_min);
+	  }
+      });
+      label_cell.appendChild(label);
+  }
+
+  function updateLim(label_cell, is_min) {
+      
+
+      
+      
+      let new_lim = label_cell.children[0].value;
+      let row = label_cell.parentElement;
+      let slider_cell = row.cells[SLIDER_POS];
+      let slider = slider_cell.children[0];
+
+      
+      if (is_min) {
+	  slider.min = new_lim;
+      } else {
+	  slider.max = new_lim;
+      }
+      slider.step = (slider.max - slider.min) / NUM_SLIDER_STEPS;
+  }
+
+  function addRow(table) {
+      
+
+      
+      
+      let new_row = table.insertRow(-1);
+      for (i = 0; i &lt; N_COLS; i++) {
+	  new_row.insertCell(-1);
+      }
+
+      
+      let slider_cell = new_row.cells[SLIDER_POS];
+      let label_cell = new_row.cells[LABEL_POS];
+      label_cell.style = &#34;width: 100px&#34;;
+      let min_label_cell = new_row.cells[MIN_LABEL_POS];
+      let max_label_cell = new_row.cells[MAX_LABEL_POS];
+      
+      
+      addSlider(slider_cell);
+      addCoeffLabel(label_cell);
+      if (table.id == &#34;a_coeffs&#34; || table.rows.length &gt; 2) {
+	  addLimLabel(min_label_cell, true);
+	  addLimLabel(max_label_cell, false);
+      }
+
+      updateCoeffLabels(table);
+  }
+
+  function updateCoeffLabels(table) {
+      
+
+      
+      let num_rows = table.rows.length;
+      let is_cos_coeff = table.id == &#34;a_coeffs&#34;;
+      let start = is_cos_coeff ? 1 : 2;
+
+      
+      for (let k = start; k &lt; num_rows; k++) {
+	  let label = table.rows[k].cells[LABEL_POS].children[0];
+	  let c_k = table.rows[k].cells[SLIDER_POS].children[0].value;
+	  
+	  
+	  let letter = is_cos_coeff ? &#34;a&#34; : &#34;b&#34;;
+	  let latex = letter + (k - 1).toString().sub()
+	              + &#34; = &#34; + math.round(c_k, NUM_DECIMALS);
+	  label.innerHTML = latex;
+	  
+      }
+  }
+
+  function readCoeffs(table) {
+      
+
+      
+      let num_rows = table.rows.length;
+      let is_cos_coeff = table.id == &#34;a_coeffs&#34;;
+
+      
+      
+      let coeffs = is_cos_coeff ? [] : [0];
+      start = is_cos_coeff ? 1 : 2;
+      for (let k = start; k &lt; num_rows; k++) {
+	  
+	  coeffs.push( table.rows[k].cells[SLIDER_POS].children[0].value );
+      }
+
+      return coeffs
+  }
+  
+  function L2norm(f) {
+      
+
+      return math.multiply(math.sqrt(math.divide(PLOT_STEP_SIZE, PERIOD/2)),
+  			   math.norm(f));
+  }
+
+  function calcPartialSeries(a, b, x) {
+      
+
+
+      
+      var partial_sum = new Array(x.length).fill(0);
+      partial_sum = math.add(partial_sum, math.divide(a[0], 2.0));
+      var omega_k;
+      var arg_k;
+
+      
+      for (k = 1; k &lt; a.length; k++) {
+  	  omega_k = 2*k*math.pi/PERIOD;
+  	  arg_k = math.multiply(omega_k, x);
+  	  partial_sum = math.add( partial_sum,
+  				  math.multiply(a[k], math.cos(arg_k))
+  				);
+      }
+
+      
+      for (k = 1; k &lt; b.length; k++) {
+  	  omega_k = 2*k*math.pi/PERIOD;
+  	  arg_k = math.multiply(omega_k, x);
+  	  partial_sum = math.add( partial_sum,
+  				  math.multiply(b[k], math.sin(arg_k))
+  				);
+      }
+
+      return partial_sum;
+  }
+
+  function updateNorm(norm_box, norm_val) {
+      let latex = &#34;The L&#34; + &#34;2&#34;.sub() + &#34; norm is &#34; + norm_val;
+      norm_box.innerHTML = latex;
+  }
+
+  function setUpCanvas() {
+      
+
+
+      
+      let equation = document.getElementById(&#39;eq&#39;);
+      equation.addEventListener(&#34;keydown&#34;, function(event) {
+	  if (event.keyCode == 13) {
+              draw();
+	  }
+      });
+      let draw_button = document.getElementById(&#39;draw&#39;);
+      draw_button.addEventListener(&#34;click&#34;, function(event) {
+	  draw()
+      });
+
+      
+      addRow(table_1);
+      addRow(table_2);
+      addRow(table_2);
+      
+      table_2.rows[1].cells[SLIDER_POS].children[0].style = &#34;opacity: 0.0&#34;;
+
+      
+      var a_k_button = document.getElementById(&#34;a_k_button&#34;);
+      a_k_button.addEventListener(&#34;click&#34;, function(event) {addRow(table_1);});
+      var b_k_button = document.getElementById(&#34;b_k_button&#34;);
+      b_k_button.addEventListener(&#34;click&#34;, function(event) {addRow(table_2);});
+
+      
+      draw();
+  }
+  
+  function draw() {
+      try {
+          
+          const expression = document.getElementById(&#39;eq&#39;).value;
+          const expr = math.compile(expression);
+
+          
+          const xValues = math.range(PLOT_LEFT_ENDPOINT,
+				     PLOT_RIGHT_ENDPOINT,
+				     PLOT_STEP_SIZE).toArray();
+          const yValues = xValues.map(function(x) {
+              return expr.evaluate({x: x})
+          });
+
+  	  
+  	  let a_k = readCoeffs(table_1);
+	  let b_k = readCoeffs(table_2);
+  	  const yValues2 = calcPartialSeries(a_k, b_k, xValues);
+
+          
+          const trace1 = {
+              x: xValues,
+              y: yValues,
+              type: &#39;scatter&#39;,
+	      name: &#39;f(x)&#39;
+          }
+          const trace2 = {
+              x: xValues,
+              y: yValues2,
+              type: &#39;scatter&#39;,
+	      name: &#39;s&#39; + &#39;n&#39;.sub()
+          }
+
+	  
+	  let norm_print = math.round(L2norm(math.subtract(yValues, yValues2)),
+				      NUM_DECIMALS);
+	  var norm_box = document.getElementById(&#34;norm&#34;);
+	  updateNorm(norm_box, norm_print);
+	  updateCoeffLabels(table_1);
+	  updateCoeffLabels(table_2);
+	  
+          const data = [trace1, trace2];
+          Plotly.newPlot(&#39;plot&#39;, data);
+      } catch (err) {
+          console.error(err)
+          alert(err)
+      }
+  }
+
+  const table_1 = document.getElementById(&#34;a_coeffs&#34;);
+  const table_2 = document.getElementById(&#34;b_coeffs&#34;);
+  setUpCanvas();
+  
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+&lt;h2 id=&#34;whats-going-on-here&#34;&gt;What&amp;rsquo;s going on here?&lt;/h2&gt;
+&lt;p&gt;To begin, we have some function $f(x)$ plotted in blue.
+This is the function that you can type into the &amp;ldquo;Enter an equation:&amp;rdquo; box.
+By default it takes the value $f(x) = 4\sin(x) + 5\cos(x/2)$ (for no reason in
+particular).
+You can type in whatever you want, though. 
+Try &lt;code&gt;x^2&lt;/code&gt; for the familiar parabola or &lt;code&gt;e^x&lt;/code&gt; for an exponential function.
+Note that the function you choose has to be continuous on the domain (here
+the interval $[-\pi, \pi]$) for it to be able to be well-approximated by the
+orange curve.&lt;/p&gt;
+&lt;p&gt;Now, what&amp;rsquo;s going on with these sliders and the orange line?
+What you might be able to deduce by messing with one slider at a time (while the
+rest remain at zero) is that each slider corresponds to a particular function,
+and that the value of the slider modulates the amplitude (height) of that
+function.
+For example, playing with the $b_1$ slider shows the function $\sin(x)$ at
+different amplitudes.
+Adding another slider with the $+$ button and playing with the $b_2$ slider
+shows a function of twice the frequency: $\sin(2x)$. 
+The $a_k$ sliders correspond instead to $\cos$ functions of different 
+frequencies.
+The only exception is the $a_0$ slider &amp;ndash; here it corresponds to the function
+$a_0/2$.
+The factor of $1/2$ is by convention, and just simplifies explicit calculations
+involving the $a_k$&amp;rsquo;s. 
+The orange curve is then just a finite sum of all of these terms. 
+In brief:&lt;/p&gt;
+&lt;p&gt;\begin{align}
+s_n(x) &amp;amp;= \frac{a_0}{2} + a_1 \cos(x) + b_1 \sin(x) + a_2 \cos(2x) + b_2\sin(2x)\\ 
+&amp;amp;\hspace{1cm} + \ldots + a_n \cos(nx) + b_n \sin(nx) \\ 
+&amp;amp;= \frac{a_0}{2} + \sum_{k = 1}^{n} a_k \cos(kx) + b_k \sin(kx)
+\end{align}&lt;/p&gt;
+&lt;p&gt;The claim, then, is that we can tweak these sliders (the values of the $a_k$&amp;rsquo;s
+and $b_k$&amp;rsquo;s) to approximate $f(x)$ which is any reasonably nice function.
+As a brief conceptual exercise, what would we choose for the coefficients if
+$f(x) = 3\sin(x) + 7\cos(2x)$?&lt;/p&gt;
+&lt;details&gt;
+	&lt;summary&gt;
+	Click to see the answer
+	&lt;/summary&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Choosing $b_1 = 3$, $a_2 = 7$ and all other coefficients to be zero does the
+trick.
+In fact, these are the only choices that will work (this fact is non-obvious).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/details&gt;
+&lt;h2 id=&#34;how-to-choose-the-coefficients&#34;&gt;How to choose the coefficients&lt;/h2&gt;
+&lt;p&gt;All this said, it&amp;rsquo;s not immediately obvious how to choose these coefficients.
+If you snoop around on
+&lt;a href=&#34;https://www.wikiwand.com/en/Fourier_series#Definition&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wikipedia&lt;/a&gt;, you&amp;rsquo;ll
+probably run into the following formulas:
+$$
+a_k = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(kx) dx
+$$
+$$
+b_k = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(kx) dx
+$$
+While mechanically reasonable (just plug in your function and integrate!) these
+integrals are often nontrivial to work out, involving a lot of integration by
+parts.
+Further, to get a deep conceptual understanding of why these are the right
+formulas, it helps to have some experience in Linear Algebra.&lt;/p&gt;
+&lt;p&gt;For this presentation, we take a little bit of a different approach.
+The first step is to ask how we evaluate &lt;em&gt;how good&lt;/em&gt; our approximation is.
+For this we can look to the familiar distance formula in 2-dimensions and then
+work our way up to finding the &lt;em&gt;distance&lt;/em&gt; between functions.
+Recall that the distance between two points is given by:
+$$
+d\bigl((x_1, y_1), (x_2, y_2)\bigr) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+$$
+One can understand this from the following figure &amp;ndash; just use the Pythagorean
+theorem.&lt;/p&gt;
+
+
+
+
+
+
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-figure-taken-from-khan-academyhttpswwwkhanacademyorgmathgeometryhs-geo-analytic-geometryhs-geo-distance-and-midpointsadistance-formula&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://lucasmyers97.github.io/post/fourier-series-widget/distance_formula_huba1b4ae92eba5508e752b6bc45b465d0_27866_2000x2000_fit_lanczos_2.PNG&#34; data-caption=&#34;Figure taken from &amp;lt;a href=&amp;#34;https://www.khanacademy.org/math/geometry/hs-geo-analytic-geometry/hs-geo-distance-and-midpoints/a/distance-formula&amp;#34;&amp;gt;Khan Academy&amp;lt;/a&amp;gt;&#34;&gt;
+
+
+  &lt;img data-src=&#34;https://lucasmyers97.github.io/post/fourier-series-widget/distance_formula_huba1b4ae92eba5508e752b6bc45b465d0_27866_2000x2000_fit_lanczos_2.PNG&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;844&#34; height=&#34;765&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Figure taken from &lt;a href=&#34;https://www.khanacademy.org/math/geometry/hs-geo-analytic-geometry/hs-geo-distance-and-midpoints/a/distance-formula&#34;&gt;Khan Academy&lt;/a&gt;
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;For a concrete example, compute the distance between $(3, 2)$ and $(7, 5)$.&lt;/p&gt;
+&lt;details&gt;
+	&lt;summary&gt;
+	Click here to see the result
+	&lt;/summary&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Writing out the distance formula gives:
+$$
+d\bigl((3, 2), (7, 5)\bigr) = \sqrt{(3 - 7)^2 + (2 - 5)^2} = \sqrt{25} = 5
+$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/details&gt;
+&lt;p&gt;If we relabel the points $(x_1, y_1) \to (p_1, p_2)$ and 
+$(x_2, y_2) \to (q_1, q_2)$ we can rewrite this distance function as:
+$$
+d(p, q) = \sqrt{(q_1 - p_1)^2 + (q_2 - p_2)^2} = \sqrt{\sum_{i = 1}^2 (q_i - p_i)^2}
+$$&lt;/p&gt;
+&lt;p&gt;where in the last step we have rewritten the formula using
+&lt;a href=&#34;https://www.khanacademy.org/math/ap-calculus-ab/ab-integration-new/ab-6-3/a/review-summation-notation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;summation notation&lt;/a&gt;
+&amp;ndash; this will be important to generalizing to points with more coordinates.
+Note that here the subscripts are telling you which &lt;em&gt;coordinate&lt;/em&gt; you are looking
+at, whereas before they were telling you which &lt;em&gt;point&lt;/em&gt; you were looking at.
+We can generalize this to points which have $N$ entries ($N$ is arbitrary), call
+them $p = (p_1, p_2, \ldots, p_N)$ and $q = (q_1, q_2, \ldots, q_N)$, and write
+the distance formula as:
+$$
+d(p, q) = \sqrt{\sum_{i = 1}^N (q_i - p_i)^2}
+$$&lt;/p&gt;
+&lt;p&gt;Now, here is the biggest conceptual jump so far: if we break up the domain into
+some evenly-spaced points $x_1, x_2, \ldots, x_N$ then we can choose the
+coordinates of $p$ to be our function $f$ evaluated at those points:
+$$
+p = \bigl(f(x_1), f(x_2), \ldots, f(x_N)\bigr)
+$$&lt;/p&gt;
+&lt;p&gt;In the figure below we&amp;rsquo;ve plotted a parabola $f(x) = x^2$ in blue, as well as
+some points at which the function is evaluated in orange.
+Each of the compontents of $p$ are understood to be the $y$-values of of those
+points.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;evaluated_at_discrete_points.png&#34; alt=&#34;A parabola evaluated at discrete points&#34;&gt;&lt;/p&gt;
+&lt;p&gt;What would $p$ be if we choose the evaluation points to be
+$(x_1, x_2, x_3, x_4, x_5) = (-2, -1, 0, 1, 2)$ and $f(x) = x^2$?&lt;/p&gt;
+&lt;details&gt;
+	&lt;summary&gt;
+		Click to see the answer
+	&lt;/summary&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$$
+p = \bigl( f(x_1), f(x_2), f(x_3), f(x_4), f(x_5) \bigr) = (4, 1, 0, 1, 4)
+$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/details&gt;
+&lt;p&gt;If we do the same operation to another function $g(x)$, then each of the terms
+in the sum $(q_i - p_i)^2 = (g(x_i) - f(x_i))^2$ is just the distance (squared!)
+between the selected points.
+In the figure below, this is the distance between the orange and the blue
+points.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;distance_between_points.png&#34; alt=&#34;Distance between points on a parabola and on a line&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Then the total distance formula gives the sum of all those little distances.
+This sort of makes sense as a way to see how similar two functions are: if they
+take on similar values at the sample points, then the sum of all those squared
+distances will be really small.&lt;/p&gt;
+&lt;p&gt;Now, if we add in more points (split up the domain more finely) we get more
+terms, but the terms don&amp;rsquo;t get any smaller.
+To keep this proposed distance formula from going to infinity, we multiply by
+the &lt;em&gt;spacing&lt;/em&gt; between the $x_i$ points &amp;ndash; call this spacing $\Delta x$.
+That way, as we make that spacing finer, $\Delta x$ gets smaller so that the
+distance function remains bounded:&lt;/p&gt;
+&lt;p&gt;$$
+d(p, q) = \sqrt{\sum_{i = 1}^N \bigl(g(x_i) - f(x_i)\bigr)^2 \Delta x}
+$$&lt;/p&gt;
+&lt;p&gt;But we can recognize this as a &lt;a href=&#34;https://www.khanacademy.org/math/ap-calculus-ab/ab-integration-new/ab-6-3/a/riemann-sums-with-summation-notation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Riemann sum&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;If we choose more and more points (that is, let $\Delta x \to 0$), then our
+summation turns into an integral.
+&lt;em&gt;That integral&lt;/em&gt; is the thing that we will take to be the distance formula for
+our functions:&lt;/p&gt;
+&lt;p&gt;$$
+d(f, g) = \sqrt{\int_{-\pi}^{\pi} \bigl( g(x) - f(x) \bigr)^2 dx}
+$$&lt;/p&gt;
+&lt;p&gt;Note that we integrate over the whole domain because those sample points $x_i$
+range over the whole interval $[-\pi, \pi]$. 
+One last thing that we do is multiply by $1/\sqrt{\pi}$.
+Again, this is by convention and makes sense once one considers this story from
+a Linear Algebra perspective &amp;ndash; all this does is rescale the distance.
+The final formula that we&amp;rsquo;re left with is called the $L_2$-norm, and is often
+denoted by pairs of vertical bars:&lt;/p&gt;
+&lt;p&gt;$$
+||g - f|| = \sqrt{ \frac{1}{\pi} \int_{-\pi}^{\pi} \bigl( g(x) - f(x) \bigr)^2 dx}
+$$&lt;/p&gt;
+&lt;p&gt;The strategy for estimating $f(x)$ with some $g(x)$ (say $s_n(x)$) will then be
+to try to minimize this distance function.
+This is calculated in the applet (right under the equation input) and the way to
+properly choose the coefficients is to use the sliders to minimize that number.
+In fact, if you do this minimization one slider at a time (use the first slider
+to get $L_2$ as small as possible, add another slider, mess with only the
+added slider, then repeat) you will end up with the proper Fourier coefficients!
+This is not meant to be obvious &amp;ndash; it seems reasonable that you might need to do
+some extra work than just choosing the coefficients one at a time to minimize
+the distance.
+However, there is a theorem from Linear Algebra that tells us we are justified
+in this process. 
+And indeed, if we do this, the orange curve almost magically starts to look like
+the blue curve.
+Give it a try to see what I mean.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

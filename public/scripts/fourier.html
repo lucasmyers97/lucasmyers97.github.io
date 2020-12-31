@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fourier Builder</title>
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+  <script src="https://unpkg.com/mathjs@8.1.0/lib/browser/math.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    #eq {
+      width: 300px;
+    }
+    input {
+      padding: 6px;
+    }
+    body, html, input {
+      font-family: sans-serif;
+      font-size: 11pt;
+    }
+    form {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body style="width=100%">
+
+  <!-- stuff for user entering equations -->
+  <label for="eq">Enter an equation:</label>
+  <input type="text" id="eq" value="4 * sin(x) + 5 * cos(x/2)" />
+  <input type="button" value="Draw" id="draw"/>
+
+  <!-- box to display norm -->
+  <div id='norm' style="position:fixed; top:70px; z-index:1; background:white">
+  </div>
+
+  <!-- plot box -->
+  <div id="plot"></div>
+
+  <!-- add table for Fourier coefficients -->
+  <table id="a_coeffs" style="float: left">
+    <th>
+      <button id="a_k_button">+</button>
+    </th>
+    <th></th>
+    <th>Cosine Coefficients</th>
+  </table>
+  <table id="b_coeffs" style="float:left">
+    <th>
+      <button id="b_k_button">+</button>
+    </th>
+    <th></th>
+    <th>Sine Coefficients</th>
+  </table>
+
+
+<script>
+  // Row positions
+  const N_COLS = 4;
+  const SLIDER_POS = 2;
+  const MIN_LABEL_POS = 1;
+  const MAX_LABEL_POS = 3;
+  const LABEL_POS = 0;
+
+  // plot attributes
+  const PLOT_STEP_SIZE = 0.05;
+  const PLOT_LEFT_ENDPOINT = -math.pi;
+  const PLOT_RIGHT_ENDPOINT = math.pi;
+  const PERIOD = 2 * math.pi;
+
+  // slider attributes
+  const DEFAULT_MIN_COEFF = -10;
+  const DEFAULT_MAX_COEFF = 10;
+  const NUM_SLIDER_STEPS = 400;
+  const NUM_DECIMALS = 4;
+
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+  const mj = function (tex) {
+      return MathJax.tex2svg(tex, {em: 16, ex: 6, display: false});
+  }
+
+  function addSlider(slider_cell) {
+      /**
+       * Adds slider to the inputted cells, sets default values
+       */
+      
+      let slider = document.createElement("input");
+      slider.type = "range";
+      slider.min = DEFAULT_MIN_COEFF;
+      slider.max = DEFAULT_MAX_COEFF;
+      slider.step = (DEFAULT_MAX_COEFF - DEFAULT_MIN_COEFF) / NUM_SLIDER_STEPS;
+      slider.value = 0;
+      slider.style = "width: " + window.innerWidth / 5 + "px";
+      slider.addEventListener("input", function(event) {draw();});
+      slider_cell.appendChild(slider);
+  }
+
+  function addCoeffLabel(label_cell) {
+      /**
+       * Adds label for Fourier coefficient to the inputted cell.
+       * Does not actually render label (updateCoeffLabels() does that).
+       */
+      
+      let label = document.createElement("div");
+      label_cell.appendChild(label);
+  }
+
+  function addLimLabel(label_cell, is_min) {
+      /**
+       * Adds either max or min label to the given cell -- goes along with a
+       * slider. Limit labels can be changed by users and will change limit
+       * labels.
+       */
+      
+      let label = document.createElement("input");
+      label.type = "text";
+
+      // align and set default limit value
+      let alignment = is_min ? "text-align: right;" : "text-align: left;";
+      label.style = "width: 50px; border: none;" + alignment;
+      label.value = is_min ? DEFAULT_MIN_COEFF : DEFAULT_MAX_COEFF;
+
+      // change associated slider limits if user inputs value
+      label.addEventListener("keydown", function(event) {
+	  if (event.keyCode == 13) {
+	      updateLim(label_cell, is_min);
+	  }
+      });
+      label_cell.appendChild(label);
+  }
+
+  function updateLim(label_cell, is_min) {
+      /**
+       * Updates slider limits when users input new limits in the max or min
+       * labels.
+       */
+      
+      // get slider object
+      let new_lim = label_cell.children[0].value;
+      let row = label_cell.parentElement;
+      let slider_cell = row.cells[SLIDER_POS];
+      let slider = slider_cell.children[0];
+
+      // change slider max/min; change step size appropriately
+      if (is_min) {
+	  slider.min = new_lim;
+      } else {
+	  slider.max = new_lim;
+      }
+      slider.step = (slider.max - slider.min) / NUM_SLIDER_STEPS;
+  }
+
+  function addRow(table) {
+      /**
+       * Adds row to the given table. Adds coefficient label, slider, and
+       * limit labels for the slider in the row.
+       */
+      
+      // create new row + cells
+      let new_row = table.insertRow(-1);
+      for (i = 0; i < N_COLS; i++) {
+	  new_row.insertCell(-1);
+      }
+
+      // get cells associated with each element
+      let slider_cell = new_row.cells[SLIDER_POS];
+      let label_cell = new_row.cells[LABEL_POS];
+      label_cell.style = "width: 100px";
+      let min_label_cell = new_row.cells[MIN_LABEL_POS];
+      let max_label_cell = new_row.cells[MAX_LABEL_POS];
+      
+      // add elements to current row
+      addSlider(slider_cell);
+      addCoeffLabel(label_cell);
+      if (table.id == "a_coeffs" || table.rows.length > 2) {
+	  addLimLabel(min_label_cell, true);
+	  addLimLabel(max_label_cell, false);
+      }
+
+      updateCoeffLabels(table);
+  }
+
+  function updateCoeffLabels(table) {
+      /**
+       * Updates Fourier coefficient labels when slider values change.
+       */
+      
+      let num_rows = table.rows.length;
+      let is_cos_coeff = table.id == "a_coeffs";
+      let start = is_cos_coeff ? 1 : 2;
+
+      // Update *each* of the coefficients in the table
+      for (let k = start; k < num_rows; k++) {
+	  let label = table.rows[k].cells[LABEL_POS].children[0];
+	  let c_k = table.rows[k].cells[SLIDER_POS].children[0].value;
+	  
+	  // Fancy math to print the coeff labels
+	  let letter = is_cos_coeff ? "a_" : "b_";
+	  let latex = letter + (k - 1) + " = " + math.round(c_k, NUM_DECIMALS);
+	  MathJax.typesetClear();
+	  label.innerHTML = '';
+	  label.appendChild(mj(latex));
+      }
+  }
+
+  function readCoeffs(table) {
+      /**
+       * Read values of the Fourier coefficients so that they can be used in
+       * the plot.
+       */
+      
+      let num_rows = table.rows.length;
+      let is_cos_coeff = table.id == "a_coeffs";
+
+      // For cosine, start filling in at k = 0
+      // Otherwise fill in k = 0 spot with a 0
+      let coeffs = is_cos_coeff ? [] : [0];
+      start = is_cos_coeff ? 1 : 2;
+      for (let k = start; k < num_rows; k++) {
+	  // jfc we gotta go through a lot of elements
+	  coeffs.push( table.rows[k].cells[SLIDER_POS].children[0].value );
+      }
+
+      return coeffs
+  }
+  
+  function L2norm(f) {
+      /**
+       * Approximates the continuous L_2 norm from a set of points `f`.
+       * Uses the step size and period of the system to calculate the norm.
+       * 
+       * @param {Array} f Array holding sample points from some function.
+       * @return {Number} The approximate L_2 norm of the given function.
+       */
+      return math.multiply(math.sqrt(math.divide(PLOT_STEP_SIZE, PERIOD/2)),
+  			   math.norm(f));
+  }
+
+  function calcPartialSeries(a, b, x) {
+      /**
+       * Calculates the partial series of a function at a set of points `x`
+       * based on arrays of Fourier coefficients `a[k]` and `b[k]`.
+       *
+       * @param {Array} a Cosine Fourier coefficients
+       * @param {Array} b Sine Fourier coefficients
+       * @param {Array} x x-values at which to evaluate partial series
+       * @return {Array} Partial series evaluated at selected points
+       */
+
+      // start partial sum with const term
+      var partial_sum = new Array(x.length).fill(0);
+      partial_sum = math.add(partial_sum, math.divide(a[0], 2.0));
+      var omega_k;
+      var arg_k;
+
+      // calc cos part of series
+      for (k = 1; k < a.length; k++) {
+  	  omega_k = 2*k*math.pi/PERIOD;
+  	  arg_k = math.multiply(omega_k, x);
+  	  partial_sum = math.add( partial_sum,
+  				  math.multiply(a[k], math.cos(arg_k))
+  				);
+      }
+
+      // calc sin part of series
+      for (k = 1; k < b.length; k++) {
+  	  omega_k = 2*k*math.pi/PERIOD;
+  	  arg_k = math.multiply(omega_k, x);
+  	  partial_sum = math.add( partial_sum,
+  				  math.multiply(b[k], math.sin(arg_k))
+  				);
+      }
+
+      return partial_sum;
+  }
+
+  function updateNorm(norm_box, norm_val) {
+      let latex = "\\text{The } L_2 \\text{ norm is }" + norm_val;
+      MathJax.typesetClear();
+      norm_box.innerHTML = '';
+      norm_box.appendChild(mj(latex));
+  }
+
+  function setUpCanvas() {
+      /**
+       * Renders inital canvas including equation box + button, tables for
+       * Fourier coefficients, and the plot.
+       */
+
+      // render equation elements
+      let equation = document.getElementById('eq');
+      equation.addEventListener("keydown", function(event) {
+	  if (event.keyCode == 13) {
+              draw();
+	  }
+      });
+      let draw_button = document.getElementById('draw');
+      draw_button.addEventListener("click", function(event) {
+	  draw()
+      });
+
+      // create some rows for the two tables
+      addRow(table_1);
+      addRow(table_2);
+      // This just makes it so that sin column lines up with cos column
+      table_2.rows[1].cells[SLIDER_POS].children[0].style = "opacity: 0.0";
+
+      // make buttons to add more coefficients
+      var a_k_button = document.getElementById("a_k_button");
+      a_k_button.addEventListener("click", function(event) {addRow(table_1);});
+      a_k_button.style = "border-radius: 50%";
+      var b_k_button = document.getElementById("b_k_button");
+      b_k_button.addEventListener("click", function(event) {addRow(table_2);});
+      b_k_button.style = "border-radius: 50%";
+
+      // make a plot
+      draw();
+  }
+  
+  function draw() {
+      try {
+          // compile the expression once
+          const expression = document.getElementById('eq').value;
+          const expr = math.compile(expression);
+
+          // evaluate the expression repeatedly for different values of x
+          const xValues = math.range(PLOT_LEFT_ENDPOINT,
+				     PLOT_RIGHT_ENDPOINT,
+				     PLOT_STEP_SIZE).toArray();
+          const yValues = xValues.map(function(x) {
+              return expr.evaluate({x: x})
+          });
+
+  	  // evaluate partial fourier series
+  	  let a_k = readCoeffs(table_1);
+	  let b_k = readCoeffs(table_2);
+  	  const yValues2 = calcPartialSeries(a_k, b_k, xValues);
+
+          // render the plot using plotly
+          const trace1 = {
+              x: xValues,
+              y: yValues,
+              type: 'scatter',
+	      name: 'f(x)'
+          }
+          const trace2 = {
+              x: xValues,
+              y: yValues2,
+              type: 'scatter',
+	      name: 'partial series'
+          }
+
+	  // Fancy math to print the norm
+	  let norm_print = math.round(L2norm(math.subtract(yValues, yValues2)),
+				      NUM_DECIMALS);
+	  var norm_box = document.getElementById("norm");
+	  updateNorm(norm_box, norm_print);
+	  updateCoeffLabels(table_1);
+	  updateCoeffLabels(table_2);
+	  
+          const data = [trace1, trace2]
+          Plotly.newPlot('plot', data)
+      } catch (err) {
+          console.error(err)
+          alert(err)
+      }
+  }
+
+  const table_1 = document.getElementById("a_coeffs");
+  const table_2 = document.getElementById("b_coeffs");
+  setUpCanvas();
+  
+</script>
+
+</body>
+</html>

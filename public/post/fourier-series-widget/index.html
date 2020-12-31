@@ -1,0 +1,1775 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Lucas Myers">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="This post is a small explanation of the Fourier Series, along with a little widget which allows you to graphically build up the series for a function of your choice by choosing appropriate coefficients.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://lucasmyers97.github.io/post/fourier-series-widget/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/tomorrow-night-bright.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/tomorrow-night-bright.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.f98df29a00e95b3c73b5872c04d5d8a6.css">
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hua8050893e9a0407604c902e1bca9557e_88576_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hua8050893e9a0407604c902e1bca9557e_88576_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://lucasmyers97.github.io/post/fourier-series-widget/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Lucas Myers">
+  <meta property="og:url" content="https://lucasmyers97.github.io/post/fourier-series-widget/">
+  <meta property="og:title" content="A Little Widget for Fourier Series | Lucas Myers">
+  <meta property="og:description" content="This post is a small explanation of the Fourier Series, along with a little widget which allows you to graphically build up the series for a function of your choice by choosing appropriate coefficients."><meta property="og:image" content="https://lucasmyers97.github.io/post/fourier-series-widget/featured.PNG">
+  <meta property="twitter:image" content="https://lucasmyers97.github.io/post/fourier-series-widget/featured.PNG"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2016-04-20T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-12-13T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://lucasmyers97.github.io/post/fourier-series-widget/"
+  },
+  "headline": "A Little Widget for Fourier Series",
+  
+  "image": [
+    "https://lucasmyers97.github.io/post/fourier-series-widget/featured.PNG"
+  ],
+  
+  "datePublished": "2016-04-20T00:00:00Z",
+  "dateModified": "2020-12-13T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Lucas Myers"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lucas Myers",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://lucasmyers97.github.io/images/icon_hua8050893e9a0407604c902e1bca9557e_88576_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "This post is a small explanation of the Fourier Series, along with a little widget which allows you to graphically build up the series for a function of your choice by choosing appropriate coefficients."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>A Little Widget for Fourier Series | Lucas Myers</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Lucas Myers</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Lucas Myers</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#cv"><span>CV</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+      
+
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>A Little Widget for Fourier Series</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      Lucas Myers</span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Dec 13, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    9 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/fourier-series-widget/#disqus_thread"></a>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/math-education/">math-education</a>, <a href="/category/physics-education/">physics-education</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="why-the-widget">Why the widget?</h2>
+<p>While there are already a huge number of resources available which introduce the
+Fourier series (including a <a href="https://youtu.be/r6sGWTCMz2k" target="_blank" rel="noopener">truly elegant video</a>
+by 3Blue1Brown on Youtube), I hadn&rsquo;t really seen any resources which allow one
+to <em>interact</em> with it in the way that I wanted. 
+To try to address this, a friend of mine and I collaborated to make the 
+applet below. 
+In it, the user can input whatever (reasonable) function they want using the 
+<a href="https://mathjs.org/docs/expressions/syntax.html" target="_blank" rel="noopener">math.js syntax</a>
+and it will be plotted in blue.
+Then they can adjust the Fourier coefficients with the sliders, plotting the
+resulting partial sum in orange.
+I&rsquo;m hoping that, in addition to serving as a fun little exercise for folks who
+are already familiar with the Fourier series, it might also serve as a motivator
+for those who are just being introduced to it (if only to answer the question
+&ldquo;what is going on with this program?&quot;).</p>
+<p>So, give it a go and see if you can make the orange plot look like the blue one.
+There&rsquo;s some information further down which attempts to explain a little bit 
+more about the Fourier series, and which talks about how to choose the
+coefficients so that the curves match up.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fourier Builder</title>
+  <script>
+    window.PlotlyConfig = {MathJaxConfig: 'local'}
+  </script>
+  <script src="../../../scripts/plotly-latest.min.js"></script>
+  <script src="../../../scripts/math.js"></script>
+  <style>
+    * {
+	box-sizing: border-box;
+    }
+
+     
+    .column {
+	float: left;
+	width: 50%;
+	padding: 15px;
+    }
+
+     
+    .row::after {
+	content: "";
+	clear: both;
+	display: table;
+    }
+  </style>
+</head>
+<body style="width=100%">
+
+  
+  <label for="eq">Enter an equation:</label>
+  <input type="text" id="eq" value="4 * sin(x) + 5 * cos(x/2)" />
+  <input type="button" value="Draw" id="draw"/>
+
+  
+  <div id='norm'>
+  </div>
+
+  
+  <div id="plot"></div>
+
+  
+  <div class="row">
+    <div class="column">
+      <table id="a_coeffs">
+	<th>
+	  <button id="a_k_button">+</button>
+	</th>
+	<th></th>
+	<th>a<sub>k</sub></th>
+	<th></th>
+      </table>
+    </div>
+    <div class="column">
+      <table id="b_coeffs">
+	<th>
+	  <button id="b_k_button">+</button>
+	</th>
+	<th></th>
+	<th>b<sub>k</sub></th>
+	<th></th>
+      </table>
+    </div>
+  </div>
+
+
+<script>
+  
+  const N_COLS = 4;
+  const SLIDER_POS = 2;
+  const MIN_LABEL_POS = 1;
+  const MAX_LABEL_POS = 3;
+  const LABEL_POS = 0;
+
+  
+  const PLOT_STEP_SIZE = 0.05;
+  const PLOT_LEFT_ENDPOINT = -math.pi;
+  const PLOT_RIGHT_ENDPOINT = math.pi;
+  const PERIOD = 2 * math.pi;
+
+  
+  const DEFAULT_MIN_COEFF = -10;
+  const DEFAULT_MAX_COEFF = 10;
+  const NUM_SLIDER_STEPS = 400;
+  const NUM_DECIMALS = 4;
+
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+  function addSlider(slider_cell) {
+      
+
+      
+      let slider = document.createElement("input");
+      slider.type = "range";
+      slider.min = DEFAULT_MIN_COEFF;
+      slider.max = DEFAULT_MAX_COEFF;
+      slider.step = (DEFAULT_MAX_COEFF - DEFAULT_MIN_COEFF) / NUM_SLIDER_STEPS;
+      slider.value = 0;
+      slider.addEventListener("input", function(event) {draw();});
+      slider_cell.appendChild(slider);
+  }
+
+  function addCoeffLabel(label_cell) {
+      
+
+      
+      let label = document.createElement("div");
+      label_cell.appendChild(label);
+  }
+
+  function addLimLabel(label_cell, is_min) {
+      
+
+      
+      let label = document.createElement("input");
+      label.type = "text";
+
+      
+      let alignment = is_min ? "text-align: right;" : "text-align: left;";
+      label.style = "width: 30px; border: none;" + alignment;
+      label.value = is_min ? DEFAULT_MIN_COEFF : DEFAULT_MAX_COEFF;
+
+      
+      label.addEventListener("keydown", function(event) {
+	  if (event.keyCode == 13) {
+	      updateLim(label_cell, is_min);
+	  }
+      });
+      label_cell.appendChild(label);
+  }
+
+  function updateLim(label_cell, is_min) {
+      
+
+      
+      
+      let new_lim = label_cell.children[0].value;
+      let row = label_cell.parentElement;
+      let slider_cell = row.cells[SLIDER_POS];
+      let slider = slider_cell.children[0];
+
+      
+      if (is_min) {
+	  slider.min = new_lim;
+      } else {
+	  slider.max = new_lim;
+      }
+      slider.step = (slider.max - slider.min) / NUM_SLIDER_STEPS;
+  }
+
+  function addRow(table) {
+      
+
+      
+      
+      let new_row = table.insertRow(-1);
+      for (i = 0; i < N_COLS; i++) {
+	  new_row.insertCell(-1);
+      }
+
+      
+      let slider_cell = new_row.cells[SLIDER_POS];
+      let label_cell = new_row.cells[LABEL_POS];
+      label_cell.style = "width: 100px";
+      let min_label_cell = new_row.cells[MIN_LABEL_POS];
+      let max_label_cell = new_row.cells[MAX_LABEL_POS];
+      
+      
+      addSlider(slider_cell);
+      addCoeffLabel(label_cell);
+      if (table.id == "a_coeffs" || table.rows.length > 2) {
+	  addLimLabel(min_label_cell, true);
+	  addLimLabel(max_label_cell, false);
+      }
+
+      updateCoeffLabels(table);
+  }
+
+  function updateCoeffLabels(table) {
+      
+
+      
+      let num_rows = table.rows.length;
+      let is_cos_coeff = table.id == "a_coeffs";
+      let start = is_cos_coeff ? 1 : 2;
+
+      
+      for (let k = start; k < num_rows; k++) {
+	  let label = table.rows[k].cells[LABEL_POS].children[0];
+	  let c_k = table.rows[k].cells[SLIDER_POS].children[0].value;
+	  
+	  
+	  let letter = is_cos_coeff ? "a" : "b";
+	  let latex = letter + (k - 1).toString().sub()
+	              + " = " + math.round(c_k, NUM_DECIMALS);
+	  label.innerHTML = latex;
+	  
+      }
+  }
+
+  function readCoeffs(table) {
+      
+
+      
+      let num_rows = table.rows.length;
+      let is_cos_coeff = table.id == "a_coeffs";
+
+      
+      
+      let coeffs = is_cos_coeff ? [] : [0];
+      start = is_cos_coeff ? 1 : 2;
+      for (let k = start; k < num_rows; k++) {
+	  
+	  coeffs.push( table.rows[k].cells[SLIDER_POS].children[0].value );
+      }
+
+      return coeffs
+  }
+  
+  function L2norm(f) {
+      
+
+      return math.multiply(math.sqrt(math.divide(PLOT_STEP_SIZE, PERIOD/2)),
+  			   math.norm(f));
+  }
+
+  function calcPartialSeries(a, b, x) {
+      
+
+
+      
+      var partial_sum = new Array(x.length).fill(0);
+      partial_sum = math.add(partial_sum, math.divide(a[0], 2.0));
+      var omega_k;
+      var arg_k;
+
+      
+      for (k = 1; k < a.length; k++) {
+  	  omega_k = 2*k*math.pi/PERIOD;
+  	  arg_k = math.multiply(omega_k, x);
+  	  partial_sum = math.add( partial_sum,
+  				  math.multiply(a[k], math.cos(arg_k))
+  				);
+      }
+
+      
+      for (k = 1; k < b.length; k++) {
+  	  omega_k = 2*k*math.pi/PERIOD;
+  	  arg_k = math.multiply(omega_k, x);
+  	  partial_sum = math.add( partial_sum,
+  				  math.multiply(b[k], math.sin(arg_k))
+  				);
+      }
+
+      return partial_sum;
+  }
+
+  function updateNorm(norm_box, norm_val) {
+      let latex = "The L" + "2".sub() + " norm is " + norm_val;
+      norm_box.innerHTML = latex;
+  }
+
+  function setUpCanvas() {
+      
+
+
+      
+      let equation = document.getElementById('eq');
+      equation.addEventListener("keydown", function(event) {
+	  if (event.keyCode == 13) {
+              draw();
+	  }
+      });
+      let draw_button = document.getElementById('draw');
+      draw_button.addEventListener("click", function(event) {
+	  draw()
+      });
+
+      
+      addRow(table_1);
+      addRow(table_2);
+      addRow(table_2);
+      
+      table_2.rows[1].cells[SLIDER_POS].children[0].style = "opacity: 0.0";
+
+      
+      var a_k_button = document.getElementById("a_k_button");
+      a_k_button.addEventListener("click", function(event) {addRow(table_1);});
+      var b_k_button = document.getElementById("b_k_button");
+      b_k_button.addEventListener("click", function(event) {addRow(table_2);});
+
+      
+      draw();
+  }
+  
+  function draw() {
+      try {
+          
+          const expression = document.getElementById('eq').value;
+          const expr = math.compile(expression);
+
+          
+          const xValues = math.range(PLOT_LEFT_ENDPOINT,
+				     PLOT_RIGHT_ENDPOINT,
+				     PLOT_STEP_SIZE).toArray();
+          const yValues = xValues.map(function(x) {
+              return expr.evaluate({x: x})
+          });
+
+  	  
+  	  let a_k = readCoeffs(table_1);
+	  let b_k = readCoeffs(table_2);
+  	  const yValues2 = calcPartialSeries(a_k, b_k, xValues);
+
+          
+          const trace1 = {
+              x: xValues,
+              y: yValues,
+              type: 'scatter',
+	      name: 'f(x)'
+          }
+          const trace2 = {
+              x: xValues,
+              y: yValues2,
+              type: 'scatter',
+	      name: 's' + 'n'.sub()
+          }
+
+	  
+	  let norm_print = math.round(L2norm(math.subtract(yValues, yValues2)),
+				      NUM_DECIMALS);
+	  var norm_box = document.getElementById("norm");
+	  updateNorm(norm_box, norm_print);
+	  updateCoeffLabels(table_1);
+	  updateCoeffLabels(table_2);
+	  
+          const data = [trace1, trace2];
+          Plotly.newPlot('plot', data);
+      } catch (err) {
+          console.error(err)
+          alert(err)
+      }
+  }
+
+  const table_1 = document.getElementById("a_coeffs");
+  const table_2 = document.getElementById("b_coeffs");
+  setUpCanvas();
+  
+</script>
+
+</body>
+</html>
+
+<h2 id="whats-going-on-here">What&rsquo;s going on here?</h2>
+<p>To begin, we have some function $f(x)$ plotted in blue.
+This is the function that you can type into the &ldquo;Enter an equation:&rdquo; box.
+By default it takes the value $f(x) = 4\sin(x) + 5\cos(x/2)$ (for no reason in
+particular).
+You can type in whatever you want, though. 
+Try <code>x^2</code> for the familiar parabola or <code>e^x</code> for an exponential function.
+Note that the function you choose has to be continuous on the domain (here
+the interval $[-\pi, \pi]$) for it to be able to be well-approximated by the
+orange curve.</p>
+<p>Now, what&rsquo;s going on with these sliders and the orange line?
+What you might be able to deduce by messing with one slider at a time (while the
+rest remain at zero) is that each slider corresponds to a particular function,
+and that the value of the slider modulates the amplitude (height) of that
+function.
+For example, playing with the $b_1$ slider shows the function $\sin(x)$ at
+different amplitudes.
+Adding another slider with the $+$ button and playing with the $b_2$ slider
+shows a function of twice the frequency: $\sin(2x)$. 
+The $a_k$ sliders correspond instead to $\cos$ functions of different 
+frequencies.
+The only exception is the $a_0$ slider &ndash; here it corresponds to the function
+$a_0/2$.
+The factor of $1/2$ is by convention, and just simplifies explicit calculations
+involving the $a_k$&rsquo;s. 
+The orange curve is then just a finite sum of all of these terms. 
+In brief:</p>
+<p>\begin{align}
+s_n(x) &amp;= \frac{a_0}{2} + a_1 \cos(x) + b_1 \sin(x) + a_2 \cos(2x) + b_2\sin(2x)\\ 
+&amp;\hspace{1cm} + \ldots + a_n \cos(nx) + b_n \sin(nx) \\ 
+&amp;= \frac{a_0}{2} + \sum_{k = 1}^{n} a_k \cos(kx) + b_k \sin(kx)
+\end{align}</p>
+<p>The claim, then, is that we can tweak these sliders (the values of the $a_k$&rsquo;s
+and $b_k$&rsquo;s) to approximate $f(x)$ which is any reasonably nice function.
+As a brief conceptual exercise, what would we choose for the coefficients if
+$f(x) = 3\sin(x) + 7\cos(2x)$?</p>
+<details>
+	<summary>
+	Click to see the answer
+	</summary>
+<blockquote>
+<p>Choosing $b_1 = 3$, $a_2 = 7$ and all other coefficients to be zero does the
+trick.
+In fact, these are the only choices that will work (this fact is non-obvious).</p>
+</blockquote>
+</details>
+<h2 id="how-to-choose-the-coefficients">How to choose the coefficients</h2>
+<p>All this said, it&rsquo;s not immediately obvious how to choose these coefficients.
+If you snoop around on
+<a href="https://www.wikiwand.com/en/Fourier_series#Definition" target="_blank" rel="noopener">Wikipedia</a>, you&rsquo;ll
+probably run into the following formulas:
+$$
+a_k = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(kx) dx
+$$
+$$
+b_k = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(kx) dx
+$$
+While mechanically reasonable (just plug in your function and integrate!) these
+integrals are often nontrivial to work out, involving a lot of integration by
+parts.
+Further, to get a deep conceptual understanding of why these are the right
+formulas, it helps to have some experience in Linear Algebra.</p>
+<p>For this presentation, we take a little bit of a different approach.
+The first step is to ask how we evaluate <em>how good</em> our approximation is.
+For this we can look to the familiar distance formula in 2-dimensions and then
+work our way up to finding the <em>distance</em> between functions.
+Recall that the distance between two points is given by:
+$$
+d\bigl((x_1, y_1), (x_2, y_2)\bigr) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+$$
+One can understand this from the following figure &ndash; just use the Pythagorean
+theorem.</p>
+
+
+
+
+
+
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure id="figure-figure-taken-from-khan-academyhttpswwwkhanacademyorgmathgeometryhs-geo-analytic-geometryhs-geo-distance-and-midpointsadistance-formula">
+
+
+  <a data-fancybox="" href="/post/fourier-series-widget/distance_formula_huba1b4ae92eba5508e752b6bc45b465d0_27866_2000x2000_fit_lanczos_2.PNG" data-caption="Figure taken from &lt;a href=&#34;https://www.khanacademy.org/math/geometry/hs-geo-analytic-geometry/hs-geo-distance-and-midpoints/a/distance-formula&#34;&gt;Khan Academy&lt;/a&gt;">
+
+
+  <img data-src="/post/fourier-series-widget/distance_formula_huba1b4ae92eba5508e752b6bc45b465d0_27866_2000x2000_fit_lanczos_2.PNG" class="lazyload" alt="" width="844" height="765">
+</a>
+
+
+  
+  
+  <figcaption>
+    Figure taken from <a href="https://www.khanacademy.org/math/geometry/hs-geo-analytic-geometry/hs-geo-distance-and-midpoints/a/distance-formula">Khan Academy</a>
+  </figcaption>
+
+
+</figure>
+
+<p>For a concrete example, compute the distance between $(3, 2)$ and $(7, 5)$.</p>
+<details>
+	<summary>
+	Click here to see the result
+	</summary>
+<blockquote>
+<p>Writing out the distance formula gives:
+$$
+d\bigl((3, 2), (7, 5)\bigr) = \sqrt{(3 - 7)^2 + (2 - 5)^2} = \sqrt{25} = 5
+$$</p>
+</blockquote>
+</details>
+<p>If we relabel the points $(x_1, y_1) \to (p_1, p_2)$ and 
+$(x_2, y_2) \to (q_1, q_2)$ we can rewrite this distance function as:
+$$
+d(p, q) = \sqrt{(q_1 - p_1)^2 + (q_2 - p_2)^2} = \sqrt{\sum_{i = 1}^2 (q_i - p_i)^2}
+$$</p>
+<p>where in the last step we have rewritten the formula using
+<a href="https://www.khanacademy.org/math/ap-calculus-ab/ab-integration-new/ab-6-3/a/review-summation-notation" target="_blank" rel="noopener">summation notation</a>
+&ndash; this will be important to generalizing to points with more coordinates.
+Note that here the subscripts are telling you which <em>coordinate</em> you are looking
+at, whereas before they were telling you which <em>point</em> you were looking at.
+We can generalize this to points which have $N$ entries ($N$ is arbitrary), call
+them $p = (p_1, p_2, \ldots, p_N)$ and $q = (q_1, q_2, \ldots, q_N)$, and write
+the distance formula as:
+$$
+d(p, q) = \sqrt{\sum_{i = 1}^N (q_i - p_i)^2}
+$$</p>
+<p>Now, here is the biggest conceptual jump so far: if we break up the domain into
+some evenly-spaced points $x_1, x_2, \ldots, x_N$ then we can choose the
+coordinates of $p$ to be our function $f$ evaluated at those points:
+$$
+p = \bigl(f(x_1), f(x_2), \ldots, f(x_N)\bigr)
+$$</p>
+<p>In the figure below we&rsquo;ve plotted a parabola $f(x) = x^2$ in blue, as well as
+some points at which the function is evaluated in orange.
+Each of the compontents of $p$ are understood to be the $y$-values of of those
+points.</p>
+<p><img src="evaluated_at_discrete_points.png" alt="A parabola evaluated at discrete points"></p>
+<p>What would $p$ be if we choose the evaluation points to be
+$(x_1, x_2, x_3, x_4, x_5) = (-2, -1, 0, 1, 2)$ and $f(x) = x^2$?</p>
+<details>
+	<summary>
+		Click to see the answer
+	</summary>
+<blockquote>
+<p>$$
+p = \bigl( f(x_1), f(x_2), f(x_3), f(x_4), f(x_5) \bigr) = (4, 1, 0, 1, 4)
+$$</p>
+</blockquote>
+</details>
+<p>If we do the same operation to another function $g(x)$, then each of the terms
+in the sum $(q_i - p_i)^2 = (g(x_i) - f(x_i))^2$ is just the distance (squared!)
+between the selected points.
+In the figure below, this is the distance between the orange and the blue
+points.</p>
+<p><img src="distance_between_points.png" alt="Distance between points on a parabola and on a line"></p>
+<p>Then the total distance formula gives the sum of all those little distances.
+This sort of makes sense as a way to see how similar two functions are: if they
+take on similar values at the sample points, then the sum of all those squared
+distances will be really small.</p>
+<p>Now, if we add in more points (split up the domain more finely) we get more
+terms, but the terms don&rsquo;t get any smaller.
+To keep this proposed distance formula from going to infinity, we multiply by
+the <em>spacing</em> between the $x_i$ points &ndash; call this spacing $\Delta x$.
+That way, as we make that spacing finer, $\Delta x$ gets smaller so that the
+distance function remains bounded:</p>
+<p>$$
+d(p, q) = \sqrt{\sum_{i = 1}^N \bigl(g(x_i) - f(x_i)\bigr)^2 \Delta x}
+$$</p>
+<p>But we can recognize this as a <a href="https://www.khanacademy.org/math/ap-calculus-ab/ab-integration-new/ab-6-3/a/riemann-sums-with-summation-notation" target="_blank" rel="noopener">Riemann sum</a>!</p>
+<p>If we choose more and more points (that is, let $\Delta x \to 0$), then our
+summation turns into an integral.
+<em>That integral</em> is the thing that we will take to be the distance formula for
+our functions:</p>
+<p>$$
+d(f, g) = \sqrt{\int_{-\pi}^{\pi} \bigl( g(x) - f(x) \bigr)^2 dx}
+$$</p>
+<p>Note that we integrate over the whole domain because those sample points $x_i$
+range over the whole interval $[-\pi, \pi]$. 
+One last thing that we do is multiply by $1/\sqrt{\pi}$.
+Again, this is by convention and makes sense once one considers this story from
+a Linear Algebra perspective &ndash; all this does is rescale the distance.
+The final formula that we&rsquo;re left with is called the $L_2$-norm, and is often
+denoted by pairs of vertical bars:</p>
+<p>$$
+||g - f|| = \sqrt{ \frac{1}{\pi} \int_{-\pi}^{\pi} \bigl( g(x) - f(x) \bigr)^2 dx}
+$$</p>
+<p>The strategy for estimating $f(x)$ with some $g(x)$ (say $s_n(x)$) will then be
+to try to minimize this distance function.
+This is calculated in the applet (right under the equation input) and the way to
+properly choose the coefficients is to use the sliders to minimize that number.
+In fact, if you do this minimization one slider at a time (use the first slider
+to get $L_2$ as small as possible, add another slider, mess with only the
+added slider, then repeat) you will end up with the proper Fourier coefficients!
+This is not meant to be obvious &ndash; it seems reasonable that you might need to do
+some extra work than just choosing the coefficients one at a time to minimize
+the distance.
+However, there is a theorem from Linear Algebra that tells us we are justified
+in this process. 
+And indeed, if we do this, the orange curve almost magically starts to look like
+the blue curve.
+Give it a try to see what I mean.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/fourier-series/">fourier-series</a>
+  
+  <a class="badge badge-light" href="/tag/interactive/">interactive</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://lucasmyers97.github.io/post/fourier-series-widget/&amp;text=A%20Little%20Widget%20for%20Fourier%20Series" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://lucasmyers97.github.io/post/fourier-series-widget/&amp;t=A%20Little%20Widget%20for%20Fourier%20Series" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=A%20Little%20Widget%20for%20Fourier%20Series&amp;body=https://lucasmyers97.github.io/post/fourier-series-widget/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://lucasmyers97.github.io/post/fourier-series-widget/&amp;title=A%20Little%20Widget%20for%20Fourier%20Series" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=A%20Little%20Widget%20for%20Fourier%20Series%20https://lucasmyers97.github.io/post/fourier-series-widget/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://lucasmyers97.github.io/post/fourier-series-widget/&amp;title=A%20Little%20Widget%20for%20Fourier%20Series" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://lucasmyers97.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu98466b4e54546e767f85d49d9e8fd67a_601371_270x270_fill_q75_lanczos_center.jpg" alt="Lucas Myers"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://lucasmyers97.github.io/">Lucas Myers</a></h5>
+      <h6 class="card-subtitle">PhD Student in Physics</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/lucasmyers97" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:myers716@umn.edu" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+<section id="comments">
+  
+    
+
+  
+</section>
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/css.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/html.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'event' : "Events",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.d0d321ad6c45c08297f04e4ff03367d3.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>
