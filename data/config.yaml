@@ -13,6 +13,11 @@ enableRecentNotes: false
 enableGitHubEdit: true
 enableMermaid: true
 GitHubLink: https://github.com/lucasmyers97/personal-site-quartz/tree/hugo/content
+favicon:
+  - rel: "show icon"
+    type: "image/png"
+    href: "icon.png"
+    sizes: "180x180"
 search:
   enableSemanticSearch: false
   operandApiKey: "REPLACE-WITH-YOUR-OPERAND-API-KEY"
