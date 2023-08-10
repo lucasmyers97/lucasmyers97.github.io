@@ -7,7 +7,7 @@ enableToc: false
 
 Mostly PhD work, but sometimes hobby projects. Largely code, some of which might be scrutable and able to be used by others.
 
-# [Notes](notes/projects.md)
+# [Notes](notes/notes.md)
 
 Personal notes that I write to remember (typically technical) details of things I'm working on. Typically not very clear or explanatory.
 
