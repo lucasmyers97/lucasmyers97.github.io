@@ -310,7 +310,7 @@ hr {
 
 .page-end {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 2em;
 
   @media all and (max-width: 780px) {
