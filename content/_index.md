@@ -15,4 +15,6 @@ Personal notes that I write to remember (typically technical) details of things 
 
 More carefully written-out documents, either for things that I would *really* like to remember or that might be helpful for others.
 
-# [About me](notes/projects.md)
+# [About me](notes/about_me.md)
+
+A brief bio.
