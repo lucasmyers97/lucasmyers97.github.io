@@ -3,18 +3,18 @@ title: Lucas Myers
 enableToc: false
 ---
 
-# [Projects](notes/projects.md)
+👋 Welcome to my website! 
+It's here to showcase my professional work, and also help motivate me to take better notes.
+Ideally it will eventually follow a [Zettelkasten](https://www.wikiwand.com/en/Zettelkasten) type of organization, but for now you can find most of the main sections below.
 
-Mostly PhD work, but sometimes hobby projects. Largely code, some of which might be scrutable and able to be used by others.
+- 🖥️ [Projects](notes/projects.md): 
+    Mostly PhD work, but sometimes hobby projects. Largely code, sometimes scrutable.
 
-# [Notes](notes/notes.md)
+- 📓 [Notes](notes/notes.md)
+    Personal notes that I write to remember (typically technical) details of things I'm working on. Mostly scraps.
 
-Personal notes that I write to remember (typically technical) details of things I'm working on. Typically not very clear or explanatory.
+- 📰 [Posts](notes/posts.md)
+    More carefully written-out documents, either for things that I would *really* like to remember or that might be helpful for others.
 
-# [Posts](notes/posts.md)
+- 😁 [About me](notes/about_me.md)
 
-More carefully written-out documents, either for things that I would *really* like to remember or that might be helpful for others.
-
-# [About me](notes/about_me.md)
-
-A brief bio.
