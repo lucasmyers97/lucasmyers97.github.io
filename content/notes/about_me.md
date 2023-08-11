@@ -5,7 +5,7 @@ draft: false
 enableToc: false
 ---
 
-I am currently a PhD candidate in physics at the University of Minnesota studying soft matter.
+I am currently a PhD candidate in the physics department at the University of Minnesota studying soft matter.
 I tend to get obsessive about technical tasks, especially when they make promises of making other (menial) work easier or more enjoyable.
 These tasks usually take many hours and are not at all worth it to complete.
 
