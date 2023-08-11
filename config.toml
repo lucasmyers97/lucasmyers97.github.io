@@ -1,5 +1,5 @@
-# baseURL = "https://lucasmyers97.github.io/"
-baseURL = "localhost:1313"
+baseURL = "https://lucasmyers97.github.io/"
+# baseURL = "localhost:1313"
 languageCode = "en-us"
 relativeURLs = false
 disablePathToLower = true
