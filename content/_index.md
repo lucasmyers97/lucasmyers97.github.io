@@ -16,5 +16,5 @@ Ideally it will eventually follow a [Zettelkasten](https://www.wikiwand.com/en/Z
 - 📰 [Posts](notes/posts.md)
     More carefully written-out documents, either for things that I would *really* like to remember or that might be helpful for others.
 
-- 😁 [About me](notes/about_me.md)
+- ❔ [About me](notes/about_me.md)
 
