@@ -40,3 +40,10 @@ enableToc: false
     - Maybe slow down with Reaper -- may be easier.
 - [ ] Start Mamma Mia
     - [ ] Start with something easy like the bass, then interface with Stephen.
+
+# General projects
+
+- [ ] Blender
+- [ ] Bevy
+- [ ] Lebedev quadrature for Rust numerical libraries
+- [ ] Knit Sweater
