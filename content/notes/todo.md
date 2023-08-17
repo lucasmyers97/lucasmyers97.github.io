@@ -12,6 +12,8 @@ enableToc: false
 - [ ] Include CV
 - [ ] Figure out Table of Contents
 - [ ] Publish Fourier Widget to GitHub
+- [ ] Write sidebar
+    - [ ] Make hamburger icon
 
 # Professional stuff
 
@@ -47,3 +49,4 @@ enableToc: false
 - [ ] Bevy
 - [ ] Lebedev quadrature for Rust numerical libraries
 - [ ] Knit Sweater
+- [ ] Inkscape
