@@ -20,6 +20,7 @@ enableToc: false
 
 # Neovim
 
+- [ ] Fix error with org stuff so I can continue to edit org files
 - [ ] Figure out how to paste images from clipboard
     - [ ] Figure out how to access clipboard images in Lua
     - [ ] Put clipboard image in folder

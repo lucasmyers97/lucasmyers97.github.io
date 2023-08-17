@@ -6,9 +6,7 @@ draft: false
 ---
 
 - [Todo](notes/todo.md)
-- Neovim
-    - Configuration files (coming soon)
-    - Foward and inverse latex search with Lua (coming soon, see [this gist](https://gist.github.com/lucasmyers97/1ee0dfca63eb17e4c3d851b32e17a61a) for an example config)
+- [Neovim](notes/neovim.md)
 - Lilypond
 - Reaper (DAW)
 - [jacktrip](notes/jacktrip.md)
