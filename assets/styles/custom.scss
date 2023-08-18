@@ -27,5 +27,21 @@
   --highlighted: #574010;
 }
 
+.titlebar {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0.5em;
 
-
+    > a {
+        font-family: var(--font-header);
+        font-weight: 700;
+        color: var(--secondary);
+        padding: 0.5em;
+        &:hover {
+          color: var(--tertiary) !important;
+        }
+        font-size: 1.1em;
+    }
+}

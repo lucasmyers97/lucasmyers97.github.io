@@ -13,6 +13,15 @@ enableRecentNotes: false
 enableGitHubEdit: true
 enableMermaid: true
 GitHubLink: https://github.com/lucasmyers97/personal-site-quartz/tree/hugo/content
+title_bar:
+  - title: Projects
+    link: notes/projects
+  - title: Notes
+    link: notes/notes
+  - title: Posts
+    link: notes/posts
+  - title: "About me"
+    link: notes/about_me
 favicon:
   - rel: "show icon"
     type: "image/png"
