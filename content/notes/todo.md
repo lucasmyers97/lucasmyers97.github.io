@@ -28,6 +28,15 @@ enableToc: false
     - [ ] Put clipboard image in folder
     - [ ] Figure out good way to specify which folder things are pasted into (potentially based on current and an image folder)
     - [ ] In pasting images, automatically create link which goes to that image
+- [ ] Figure out dap ([watch this](https://youtu.be/0moS8UHupGc)).
+- [ ] Figure out built-in C++ indenting so it aligns with opening parenthesis.
+    - [ ] Try not to get distracted by general formatting.
+
+# GDB
+
+- [ ] Write page on how to use + useful shortcuts
+- [ ] Look at pretty printing
+- [ ] Look at making custom functions
 
 # Bachmann-Landau
 
@@ -43,6 +52,11 @@ enableToc: false
     - Maybe slow down with Reaper -- may be easier.
 - [ ] Start Mamma Mia
     - [ ] Start with something easy like the bass, then interface with Stephen.
+
+# Wezterm
+
+- [ ] Move tabs in config [see here](https://wezfurlong.org/wezterm/config/lua/keyassignment/MoveTab.html)
+- [ ] Rename tabs in config [see here](https://github.com/wez/wezterm/issues/522)
 
 # General projects
 
