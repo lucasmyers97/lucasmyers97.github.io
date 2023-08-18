@@ -44,6 +44,17 @@ enableToc: false
 - [ ] Start Mamma Mia
     - [ ] Start with something easy like the bass, then interface with Stephen.
 
+# Home server
+
+- [ ] Figure out different options for communicating over a network
+    - [ ] WebDAV
+    - [ ] VPN
+    - [ ] Zerotier
+- [ ] Consider different storage options
+    - [ ] ssh
+    - [ ] nextcloud
+    - [ ] owncloud
+
 # General projects
 
 - [ ] Blender
