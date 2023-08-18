@@ -58,6 +58,17 @@ enableToc: false
 - [ ] Move tabs in config [see here](https://wezfurlong.org/wezterm/config/lua/keyassignment/MoveTab.html)
 - [ ] Rename tabs in config [see here](https://github.com/wez/wezterm/issues/522)
 
+# Home server
+
+- [ ] Figure out different options for communicating over a network
+    - [ ] WebDAV
+    - [ ] VPN
+    - [ ] Zerotier
+- [ ] Consider different storage options
+    - [ ] ssh
+    - [ ] nextcloud
+    - [ ] owncloud
+
 # General projects
 
 - [ ] Blender
