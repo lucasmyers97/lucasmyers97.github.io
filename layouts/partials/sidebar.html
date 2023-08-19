@@ -2,4 +2,11 @@
     <div class="sidebar-header">
         <img src="/icon.png">
     </div>
+    <ul>
+    {{ range $.Site.Data.config.title_bar }}
+        <li>
+            <a href="{{ .link | absURL }}"> {{ .title }} </a>
+        </li>
+    {{ end }}
+    </ul>
 </div>
