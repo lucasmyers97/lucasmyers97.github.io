@@ -9,6 +9,7 @@ draft: false
 - [Neovim](notes/neovim.md)
 - [C++](notes/c++.md)
 - [Linux](notes/linux.md)
+- [Git](notes/git.md)
 - Lilypond
 - Reaper (DAW)
 - [jacktrip](notes/jacktrip.md)

@@ -1,3 +1,10 @@
+---
+title: "Linux"
+date: 2023-08-19T9:30-05:00
+enableToc: false
+draft: false
+---
+
 # Sound driver
 
 ## Getting headphone mic to work
