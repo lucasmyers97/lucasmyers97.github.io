@@ -13,7 +13,8 @@ enableToc: false
 - [ ] Figure out Table of Contents
 - [ ] Publish Fourier Widget to GitHub
 - [ ] Write sidebar
-    - [ ] Make hamburger icon
+    - [ ] Make hamburger icon [see here for tutorial](https://w3codepen.com/howto-html-css-hamburger-menu-icon/)
+    - [ ] Write "how to make a sidebar and toolbar post"
 
 # Professional stuff
 
