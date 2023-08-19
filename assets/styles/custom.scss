@@ -32,6 +32,17 @@
     height: 100%;
     position: fixed;
     top: 0;
+    right: 0;
+    background-color: var(--lightgray);
+
+    .sidebar-header {
+        height: 100px;
+        display: flex;
+        outline-style: solid;
+        outline-color: var(--outlinegray);
+        outline-width: thin;
+        justify-content: flex-end;
+    }
 
     p {
         color: red;
