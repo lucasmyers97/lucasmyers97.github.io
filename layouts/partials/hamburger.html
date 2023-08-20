@@ -1,0 +1,11 @@
+{{ $js := resources.Get "js/hamburger.js" | resources.Fingerprint "md5" }}
+<script src="{{ $js.Permalink }}"></script>
+<label id="navbutton">
+    <div class="hamburger" onclick="clickHamburger()">
+        <span class="burger"></span>
+        <span class="space"></span>
+        <span class="burger"></span>
+        <span class="space"></span>
+        <span class="burger"></span>
+    </div>
+</label>
