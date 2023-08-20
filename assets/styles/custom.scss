@@ -33,6 +33,10 @@
         display: none;
     }
 
+    &:focus {
+        outline: none;
+    }
+
     width: 280px;
     height: 100%;
     position: fixed;
