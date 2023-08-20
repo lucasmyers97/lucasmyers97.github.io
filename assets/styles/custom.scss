@@ -48,7 +48,8 @@
         outline-style: solid;
         outline-color: var(--outlinegray);
         outline-width: thin;
-        justify-content: flex-end;
+        justify-content: space-between;
+        align-items: stretch;
     }
 
     p {
@@ -159,6 +160,55 @@
 
     span.space {
         flex-grow: 1;
+    }
+
+    &:hover {
+        cursor:pointer;
+    }
+}
+
+.x-button-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1.2em;
+}
+
+.x-button {
+
+    position: relative;
+    height: 2em;
+    width: 2em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    
+    span.x-line-1 {
+        position: absolute;
+        height: 15%;
+        width: 100%;
+        transform: rotate(-45deg);
+        background: var(--secondary);
+        border-radius: 9px;
+    }
+    &:hover span.x-line-1 {
+        background: var(--tertiary) !important;
+        transition: 0.2s;
+    }
+
+    span.x-line-2 {
+        position: absolute;
+        height: 15%;
+        width: 100%;
+        transform: rotate(45deg);
+        background: var(--secondary);
+        border-radius: 9px;
+    }
+    &:hover span.x-line-2 {
+        background: var(--tertiary) !important;
+        transition: 0.2s;
     }
 
     &:hover {

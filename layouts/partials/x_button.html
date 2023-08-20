@@ -1,0 +1,8 @@
+{{ $js_x_button := resources.Get "js/x_button.js" | resources.Fingerprint "md5" }}
+<script src="{{ $js_x_button.Permalink }}"></script>
+<label id="x-button" class="x-button-label">
+    <div class="x-button" onclick="clickXButton()">
+        <span class="x-line-1"></span>
+        <span class="x-line-2"></span>
+    </div>
+</label>
