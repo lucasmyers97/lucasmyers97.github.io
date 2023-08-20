@@ -4,7 +4,7 @@ function clickHamburger() {
     sidebar_element.setAttribute('class', 'sidebar-open');
     sidebar_element.focus();
 
-    sidebar_element.addEventListener('focusout', (event) => {
+    sidebar_element.addEventListener('blur', (event) => {
         if (event.relatedTarget) {
             if (sidebar_element.contains(event.relatedTarget)) {
                 return;
