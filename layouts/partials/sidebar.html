@@ -1,5 +1,5 @@
-{{ $js := resources.Get "js/sidebar_items.js" | resources.Fingerprint "md5" }}
-<script src="{{ $js.Permalink }}"></script>
+{{ $js_sidebar := resources.Get "js/sidebar_items.js" | resources.Fingerprint "md5" }}
+<script src="{{ $js_sidebar.Permalink }}"></script>
 <div class="sidebar-closed" id="sidebar" tabindex="-1">
     <div class="sidebar-header">
         <img src="/icon.png">
