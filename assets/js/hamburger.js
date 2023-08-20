@@ -1,10 +1,21 @@
 function clickHamburger() {
+
     const sidebar_element = document.getElementById('sidebar');
     sidebar_element.setAttribute('class', 'sidebar-open');
     sidebar_element.focus();
-    console.log("I clickedd on the hamburger");
-    sidebar_element.addEventListener('blur', (event) => {
-        sidebar_element.setAttribute('class', 'sidebar-closed');
-        console.log("I did it");
-    }, true);
+
+    sidebar_element.addEventListener('focusout', (event) => {
+        if (event.relatedTarget) {
+            if (sidebar_element.contains(event.relatedTarget)) {
+                return;
+            }
+        }
+        sidebar_element.dataset.timeout = setTimeout(() => {
+            sidebar_element.setAttribute('class', 'sidebar-closed');
+        }, 0)
+    });
+
+    sidebar_element.addEventListener('focus', (event) => {
+        clearTimeout(sidebar_element.dataset.timeout);
+    });
 }

@@ -1,10 +1,12 @@
+{{ $js := resources.Get "js/sidebar_items.js" | resources.Fingerprint "md5" }}
+<script src="{{ $js.Permalink }}"></script>
 <div class="sidebar-closed" id="sidebar" tabindex="-1">
     <div class="sidebar-header">
         <img src="/icon.png">
     </div>
     <ul>
     {{ range $.Site.Data.config.title_bar }}
-        <li>
+        <li onclick="clickSidebarItem()">
             <a href="{{ .link | absURL }}"> {{ .title }} </a>
         </li>
     {{ end }}

@@ -27,11 +27,34 @@
   --highlighted: #574010;
 }
 
+@keyframes slidein {
+  from {
+    right: -280px;
+  }
+
+  to {
+      right: 0;
+  }
+}
+
+@keyframes slideout {
+  from {
+    right: 0px;
+  }
+
+  to {
+      right: -280px;
+  }
+}
+
 .sidebar-open {
 
     @media all and (min-width: 840px) {
         display: none;
-    }
+    }  
+
+    animation-duration: 0.2s;
+    animation-name: slidein;
 
     &:focus {
         outline: none;
@@ -41,7 +64,7 @@
     height: 100%;
     position: fixed;
     top: 0;
-    right: 0;
+    right: 0px;
     background-color: var(--lightgray);
 
     .sidebar-header {
@@ -101,7 +124,79 @@
 }
 
 .sidebar-closed {
-    display: none;
+
+    @media all and (min-width: 840px) {
+        display: none;
+    }  
+
+    animation-duration: 0.2s;
+    animation-name: slideout;
+
+    &:focus {
+        outline: none;
+    }
+
+    width: 280px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: -280px;
+    background-color: var(--lightgray);
+
+    .sidebar-header {
+        height: 100px;
+        display: flex;
+        outline-style: solid;
+        outline-color: var(--outlinegray);
+        outline-width: thin;
+        justify-content: flex-end;
+    }
+
+    p {
+        color: red;
+        text-align: center;
+    }
+
+    ul {
+        height: 35vh;
+
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        padding: 0;
+        margin: 0;
+
+        font-family: var(--font-header);
+        font-size: 1.1em;
+        font-weight: 700;
+        color: var(--secondary);
+        &:hover {
+          color: var(--tertiary) !important;
+        }
+
+        li {
+            flex-grow: 1;
+
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+
+            &:hover {
+                background-color: var(--outlinegray) !important;
+                transition: 0.2s;
+            }
+
+            a {
+                flex-grow: 1;
+                padding-left: 1.5em;
+
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
 }
 
 .titlebar {
