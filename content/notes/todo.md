@@ -23,6 +23,8 @@ enableToc: false
 
 # Neovim
 
+- [ ] Figure out [folding](https://neovim.io/doc/user/fold.html) [for comments](https://vi.stackexchange.com/questions/3512/how-to-fold-comments)
+- [ ] Figure out [folding for content](https://github.com/anuvyklack/pretty-fold.nvim)
 - [ ] Fix error with org stuff so I can continue to edit org files
 - [ ] Figure out how to paste images from clipboard
     - [ ] Figure out how to access clipboard images in Lua
