@@ -77,6 +77,7 @@ enableToc: false
 
 # General projects
 
+- [ ] Read through sympy code generation and write small library for code generation
 - [ ] Poxy
 - [ ] Blender
 - [ ] Bevy
