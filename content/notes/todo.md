@@ -77,6 +77,7 @@ enableToc: false
 
 # General projects
 
+- [ ] Poxy
 - [ ] Blender
 - [ ] Bevy
 - [ ] Lebedev quadrature for Rust numerical libraries
