@@ -16,6 +16,9 @@ enableToc: false
     - [ ] Make hamburger icon [see here for tutorial](https://w3codepen.com/howto-html-css-hamburger-menu-icon/)
     - [ ] Write "how to make a sidebar and toolbar post"
 
+# New Website
+- [ ] Start writing Quartz in Zola
+
 # Professional stuff
 
 - [ ] Update CV
@@ -79,3 +82,6 @@ enableToc: false
 - [ ] Lebedev quadrature for Rust numerical libraries
 - [ ] Knit Sweater
 - [ ] Inkscape
+- [ ] Circuits
+    - [ ] Explain how capacitors, resistors, and inductors affect an AC current (particularly a square wave, which is what an Arduino outputs). 
+    - [ ] Just go through Hambley 
