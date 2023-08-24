@@ -15,7 +15,7 @@ I still need to publish the widget (or one I rewrote in Rust) to Github pages, s
 This was an attempt to write a talk out as a post to try to curb some procrastination (really had some writer's block making the slides).
 It was pretty silly, and I still need to put in the figures (right now it's all placeholders), so the link is currently defunct.
 
-# [Bachmann-Landau notation widget](https://lucasmyers97.github.io/bachmann-landau/)
+# <a href="https://lucasmyers97.github.io/bachmann-landau/" target="_blank" rel="noopener noreferrer">Bachmann-Landau notation widget</a>
 
 I started reading [Calculus and Analysis in Euclidean Space](https://link.springer.com/book/10.1007/978-3-319-49314-5), one of the really great [Undergraduate Texts in Mathematics](https://www.springer.com/series/666) to try to skirt around reading [Calculus on Manifolds](https://www.wikiwand.com/en/Calculus_on_Manifolds_(book)) -- it was just pretty terse and didn't lay out a lot of the intuition.
 However, C&A in E starts off with [Bachmann-Landau notation](https://www.wikiwand.com/en/Big_O_notation) to simplify the presentation.
