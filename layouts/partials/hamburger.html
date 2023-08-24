@@ -1,7 +1,7 @@
 {{ $js_hamburger := resources.Get "js/hamburger.js" | resources.Fingerprint "md5" }}
 <script src="{{ $js_hamburger.Permalink }}" defer></script>
 <label id="navbutton">
-    <div class="hamburger" onclick="clickHamburger()">
+    <div class="hamburger" id="hamburger">
         <span class="burger"></span>
         <span class="space"></span>
         <span class="burger"></span>

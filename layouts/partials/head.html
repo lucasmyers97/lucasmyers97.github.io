@@ -122,6 +122,13 @@
       const render = () => {
       // NOTE: everything within this callback will be executed for every page navigation. This is a good place to put JavaScript that loads or modifies data on the page, adds event listeners, etc. If you are only dealing with basic DOM replacement, use the init function
 
+      const hamburger = document.getElementById("hamburger");
+      hamburger.onclick = _ => clickHamburger();
+      const sidebar_item = document.getElementById("sidebar-item");
+      sidebar_item.onclick = _ => clickSidebarItem();
+      const x_button = document.getElementById("x-button");
+      x_button.onclick = _ => clickXButton();
+
       const siteBaseURL = new URL(BASE_URL);
       const pathBase = siteBaseURL.pathname;
       const pathWindow = window.location.pathname;
@@ -224,6 +231,7 @@
         throwOnError : false
       });
       {{end}}
+
     };
   </script>
   {{if $data.enableSPA | default $.Site.Data.config.enableSPA}}
