@@ -10,9 +10,16 @@ draft: false
 ## Basic input/output
 
 ```python
-input0 = inputs[0]
+vector_data = inputs[0].PointData['vector_data']
+scalar_data = inputs[0].PointData['scalar_data']
 
-data = input0.PointData['V'] / 2.0
+print(vector_data.shape)
+print(scalar_data.shape)
 
-output.PointData.append(data, 'V_half')
+output.PointData.append(scalar_data / 2.0, 'scalar_data_half')
+```
+Output would give:
+```console
+(269472, 3)
+(269472,)
 ```
