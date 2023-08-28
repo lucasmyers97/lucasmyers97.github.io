@@ -75,6 +75,11 @@ enableToc: false
     - [ ] nextcloud
     - [ ] owncloud
 
+# Sympy
+
+- [ ] Read indexed code and function code
+- [ ] Figure out how to make an indexed function object which works properly with differentiation.
+
 # General projects
 
 - [ ] Read through sympy code generation and write small library for code generation
