@@ -120,3 +120,12 @@ I had to switch to the standard aux headphones (which, I actually thought the in
 - The JackTrip executable from apt does not include GUI support, which is sort of annoying.
     - To deal with this, I just downloaded the zip from GitHub and then followed the README.md to install. 
     - Works well, I can launch the GUI from the gnome app selector.
+
+# Port forwarding
+
+The Xfinity app was not letting me view my port forwarding (it would just say "an unexpected error has occured").
+I found a fix [here](https://forums.xfinity.com/conversations/xfinity-app/unable-to-set-port-forwarding/645027d3b9339b2013e96c07) which reads as follows
+```
+Open up the xfinity app and it should bring you to the overview page. On the top right, there is a chat icon, click it. It will bring you to the chat AI assist. In the chat window, type port forward. The AI will respond the a number of prompts, select network. Then another list of prompts will load, select open advanced options. Finally, the last set of prompts will appear, where here you can select port forwarding.
+```
+I guess the AI can bypass whatever the menu fails to do.
