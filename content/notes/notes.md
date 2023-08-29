@@ -8,6 +8,7 @@ draft: false
 - [Todo](notes/todo.md)
 - [Neovim](notes/neovim.md)
 - [C++](notes/c++.md)
+- [Python](notes/python.md)
 - [Paraview](notes/paraview.md)
 - [Linux](notes/linux.md)
 - [Git](notes/git.md)
