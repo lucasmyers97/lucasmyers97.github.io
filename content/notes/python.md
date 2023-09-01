@@ -46,3 +46,15 @@ type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" |
 The precision follows the `.`, and the way that it manifests depends on the particular float or decimal `type` chosen.
 For example, for a precision `p`, the `f` type prints `p` digits following the decimal point, so that `{:.3f}` would print 3 decimal points.
 [Python docs here](https://docs.python.org/3/library/string.html#format-specification-mini-language).
+
+# Pretty plotting
+
+[See this repo](https://github.com/garrettj403/SciencePlots)
+To import:
+```
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+plt.style.use('science')
+mpl.rcParams['figure.dpi'] = 300
+```
