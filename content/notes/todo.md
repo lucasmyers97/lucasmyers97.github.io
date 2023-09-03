@@ -86,6 +86,7 @@ enableToc: false
 
 # General projects
 
+- [ ] Look at org roam, compare to neorg
 - [ ] Learn UML, write research code in it
 - [ ] Read through sympy code generation and write small library for code generation
 - [ ] Poxy
