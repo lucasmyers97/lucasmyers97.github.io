@@ -80,6 +80,10 @@ enableToc: false
 - [ ] Read indexed code and function code
 - [ ] Figure out how to make an indexed function object which works properly with differentiation.
 
+# Lilypond
+
+- [ ] Write up what I was struggling with during guitar stuff
+
 # General projects
 
 - [ ] Learn UML, write research code in it
