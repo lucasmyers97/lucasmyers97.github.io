@@ -28,7 +28,7 @@ enableToc: false
 
 - [ ] Figure out [folding](https://neovim.io/doc/user/fold.html) [for comments](https://vi.stackexchange.com/questions/3512/how-to-fold-comments)
 - [ ] Figure out [folding for content](https://github.com/anuvyklack/pretty-fold.nvim)
-- [ ] Fix error with org stuff so I can continue to edit org files
+- [X] Fix error with org stuff so I can continue to edit org files
 - [ ] Figure out how to paste images from clipboard
     - [ ] Figure out how to access clipboard images in Lua
     - [ ] Put clipboard image in folder
@@ -37,6 +37,10 @@ enableToc: false
 - [ ] Figure out dap ([watch this](https://youtu.be/0moS8UHupGc)).
 - [ ] Figure out built-in C++ indenting so it aligns with opening parenthesis.
     - [ ] Try not to get distracted by general formatting.
+
+# Neorg
+
+- [ ] Make it so pressing enter on links takes you to the link or opens the file with `xdg-open`.
 
 # GDB
 
@@ -61,8 +65,9 @@ enableToc: false
 
 # Wezterm
 
-- [ ] Move tabs in config [see here](https://wezfurlong.org/wezterm/config/lua/keyassignment/MoveTab.html)
+- [X] Move tabs in config [see here](https://wezfurlong.org/wezterm/config/lua/keyassignment/MoveTab.html)
 - [ ] Rename tabs in config [see here](https://github.com/wez/wezterm/issues/522)
+- [ ] Put config on GitHub
 
 # Home server
 
@@ -79,6 +84,12 @@ enableToc: false
 
 - [ ] Read indexed code and function code
 - [ ] Figure out how to make an indexed function object which works properly with differentiation.
+
+# Orgzly
+
+- [ ] Figure out where and how it calls the org parser
+- [ ] Figure out how to use treesitter in Android
+- [ ] See if Neorg could also be added as a config option
 
 # General projects
 
