@@ -91,8 +91,14 @@ enableToc: false
 - [ ] Figure out how to use treesitter in Android
 - [ ] See if Neorg could also be added as a config option
 
+# Lilypond
+
+- [ ] Write up what I was struggling with during guitar stuff
+
 # General projects
 
+- [ ] Look at org roam, compare to neorg
+- [ ] Learn UML, write research code in it
 - [ ] Read through sympy code generation and write small library for code generation
 - [ ] Poxy
 - [ ] Blender
