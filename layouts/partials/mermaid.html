@@ -1,8 +1,7 @@
 {{if $.Site.Data.config.enableMermaid}}
   {{ if .Page.Store.Get "hasMermaid" }}
-    <script type="module">
-      import mermaid from 'https://unpkg.com/mermaid@9/dist/mermaid.esm.min.mjs';
-      mermaid.initialize({ startOnLoad: true });
-    </script>
+    {{$scriptname := "js/mermaid.js"}}
+    {{ $s := resources.Get $scriptname | resources.ExecuteAsTemplate $scriptname . | resources.Fingerprint "md5" | resources.Minify }}
+    <script src="{{$s.Permalink}}" type="module"></script>
   {{ end }}
 {{ end }}
