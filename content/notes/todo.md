@@ -7,6 +7,7 @@ enableToc: false
 
 # Website
 
+- [ ] Write post about easily creating documentation with Poxy using GitHub pages to deploy. 
 - [ ] Increase font size
 - [ ] Figure out better organization
 - [ ] Include CV
@@ -26,6 +27,7 @@ enableToc: false
 
 # Neovim
 
+- [ ] Write post about find and replace in vim
 - [ ] Figure out [folding](https://neovim.io/doc/user/fold.html) [for comments](https://vi.stackexchange.com/questions/3512/how-to-fold-comments)
 - [ ] Figure out [folding for content](https://github.com/anuvyklack/pretty-fold.nvim)
 - [X] Fix error with org stuff so I can continue to edit org files
