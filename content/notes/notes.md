@@ -12,6 +12,7 @@ draft: false
 - [Paraview](notes/paraview.md)
 - [Linux](notes/linux.md)
 - [Git](notes/git.md)
+- [Website](notes/website.md)
 - Lilypond
 - Reaper (DAW)
 - [jacktrip](notes/jacktrip.md)
