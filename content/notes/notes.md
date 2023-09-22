@@ -13,6 +13,7 @@ draft: false
 - [Linux](notes/linux.md)
 - [Git](notes/git.md)
 - [Website](notes/website.md)
+- [Lua](notes/lua.md)
 - Lilypond
 - Reaper (DAW)
 - [jacktrip](notes/jacktrip.md)
