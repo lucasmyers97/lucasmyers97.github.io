@@ -44,6 +44,76 @@ This is helpful for things like taking gradients of data.
 
 [See here for documentation](https://docs.paraview.org/en/latest/ReferenceManual/vtkNumPyIntegration.html)
 
+# Python Algorithms
+
+There is a way to write something akin to a programmable filter (i.e. in Python), but which allows one to take inputs instead of hardcoding in values.
+This is helpful because you don't have to go back and find the script every time you want to use the filter -- instead you can just search the filter in Paraview.
+They give an example in the Paraview documentation [here](https://docs.paraview.org/en/latest/ReferenceManual/pythonProgrammableFilter.html#python-algorithm).
+However, it only sort of works, and it's hard to combine ideas from the two filters.
+Hence, I give an example that I wrote up which calculates the distance of each point from a double helix of a certain distance from the origin, and twist wavenumber:
+``` python
+import numpy as np
+
+# same imports as earlier.
+from vtkmodules.vtkCommonDataModel import vtkDataSet
+from vtkmodules.util.vtkAlgorithm import VTKPythonAlgorithmBase
+from vtkmodules.numpy_interface import dataset_adapter as dsa
+
+# new module for ParaView-specific decorators.
+from paraview.util.vtkAlgorithm import smproxy, smproperty, smdomain
+
+@smproxy.filter(label="Double Helix Filter")
+@smproperty.input(name="Input")
+class HalfVFilter(VTKPythonAlgorithmBase):
+    # the rest of the code here is unchanged.
+    def __init__(self):
+        VTKPythonAlgorithmBase.__init__(self, outputType='vtkUnstructuredGrid')
+        self.distance = 1.0
+        self.twist_wavenumber = 0.0
+
+    def RequestData(self, request, inInfo, outInfo):
+        # get the first input.
+        input0 = dsa.WrapDataObject(vtkDataSet.GetData(inInfo[0]))
+
+        d = self.distance
+        alpha = self.twist_wavenumber
+        
+        p = input0.GetPoints()
+
+        dist = np.minimum( np.sqrt( (p[:, 1] - d * np.cos(alpha * p[:, 0]))**2
+                               + (p[:, 2] - d * np.sin(alpha * p[:, 0]))**2 ),
+                       np.sqrt( (p[:, 1] + d * np.cos(alpha * p[:, 0]))**2
+                               + (p[:, 2] + d * np.sin(alpha * p[:, 0]))**2 )
+                         )
+
+        # add to output
+        output = dsa.WrapDataObject(vtkDataSet.GetData(outInfo))
+        output.ShallowCopy(input0.VTKObject)
+        output.PointData.append(dist, "dist");
+        return 1
+
+    @smproperty.doublevector(name="distance", default_values=1.0)
+    def SetDistance(self, x):
+        self.distance = x
+        self.Modified()
+
+    @smproperty.doublevector(name="twist_wavenumber", default_values=0.0)
+    def SetTwistWavenumber(self, x):
+        self.twist_wavenumber = x
+        self.Modified()
+```
+
+Basically you create a Python object which acts as the filter.
+The `__init__` function lets you indicate the number of functions, and the output type (which in this case is an unstructured grid, what I typically use).
+To actually do the job of the filter, you define a function `RequestData`.
+There's boilerplate on how to input and output in the same way as the programmable filter, which should be self-explanatory.
+You define input parameters to the filter by defining functions which set a particular object member.
+Presumably you may use those members in the actual calculation of the filter.
+To see other available options for input parameters (including custom xml ones), see the documentation linked above.
+
+You actually use these in Paraview by loading in the `Tools > Manage Plugins` window.
+Note that you can check a box which will load the plugins at startup.
+
 # Custom filters
 
 There are often times when one wants to apply a series of filters to many sets of data.
