@@ -25,6 +25,16 @@ Output would give:
 (269472, 3)
 (269472,)
 ```
+Additionally, we may get the actual points themselves as follows:
+```python
+points = inputs[0].GetPoints()
+
+print(points.shape)
+```
+for which the output would give:
+```console
+(269472, 3)
+```
 
 ## Using numpy
 
