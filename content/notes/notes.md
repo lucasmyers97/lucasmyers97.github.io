@@ -18,3 +18,4 @@ draft: false
 - Reaper (DAW)
 - [jacktrip](notes/jacktrip.md)
 - [Licensing](notes/licensing.md)
+- [Latex](notes/latex.md)
