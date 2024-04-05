@@ -214,7 +214,7 @@ between the selected points.
 In the figure below, this is the distance between the orange and the blue
 points.
 
-![Distance between points on a parabola and on a line](notes/images/fourier-series-widget/distance_between_points.png)
+![Distance between points on a parabola and on a line](./notes/images/fourier-series-widget/distance_between_points.png)
 
 Then the total distance formula gives the sum of all those little distances.
 This sort of makes sense as a way to see how similar two functions are: if they
