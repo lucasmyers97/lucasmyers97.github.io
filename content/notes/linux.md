@@ -137,3 +137,8 @@ The command is:
 ``` bash
 tar -xzvf file_to_unzip.tgz -C /place/to/unzip
 ```
+
+# Install from source
+
+If you ever use `make` to compile a program from source, use `checkinstall` instead of `make install` to install it.
+The reason for this is that it automatically makes a `.deb` file which you may then uninstall with a package manager.

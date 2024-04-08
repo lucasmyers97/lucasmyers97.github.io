@@ -5,6 +5,37 @@ enableToc: false
 draft: false
 ---
 
+# Installing vanilla python
+
+To use `ipython` and `jupyter` I needed to install the appropriate packages:
+``` bash
+sudo apt-get install build-essential gdb lcov pkg-config \
+      libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
+      libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
+      lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+```
+A list can also be found [here](https://devguide.python.org/getting-started/setup-building/index.html#install-dependencies) in the python dev guides.
+Then we configure with the appropriate options:
+``` bash
+./configure --enable-loadable-sqlite-extensions --enable-optimizations
+```
+
+# Other issues
+
+Ran into issue with Matplotlib, error was:
+``` console
+[xcb] Extra reply data still left in queue
+[xcb] This is most likely caused by a broken X extension library
+[xcb] Aborting, sorry about that.
+python3: ../../src/xcb_io.c:673: _XReply: Assertion `!xcb_xlib_extra_reply_data_left' failed.
+Aborted (core dumped)
+```
+Had to install Qt5:
+``` bash
+pip install pyqt5
+```
+After that it worked.
+
 # List of arguments with `argparse`
 
 Use [`nargs`](https://docs.python.org/3/library/argparse.html#nargs) option. 
