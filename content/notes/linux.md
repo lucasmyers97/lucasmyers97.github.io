@@ -130,3 +130,10 @@ and then do
 gpg --verify file_to_be_verified.tgz.asc
 ```
 It should say that there is a good signature.
+
+# Unzip tarballs
+
+The command is:
+``` bash
+tar -xzvf file_to_unzip.tgz -C /place/to/unzip
+```
