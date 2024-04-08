@@ -103,3 +103,30 @@ Here are the explicit steps:
     ssh-copy-id -i ~/.ssh/some_key_name.pub remote-user@remote-host
     ```
 See [this Stack Exchange answer](https://superuser.com/a/8110/1375974), and [this GitHub guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) were very helpful.
+
+# Keys for downloads
+
+## Checksums
+
+To do a standard checksum where they give you a code, do the following:
+``` bash
+echo 'bfd4d3b8eac4216c235d7a5c3bf02d5c file_to_check.tgz' | md5sum --check
+```
+``` console
+file_to_check.tgz: OK
+```
+where the first string is the code.
+This also works for `sha256sum`, `sha512sum`, etc.
+
+## GPG Keys
+
+For this, you need a public key, and a `.asc` file corresponding to the binary.
+When you know the key id, enter:
+``` bash
+gpg --recv-keys [key id]
+```
+and then do
+``` bash
+gpg --verify file_to_be_verified.tgz.asc
+```
+It should say that there is a good signature.
